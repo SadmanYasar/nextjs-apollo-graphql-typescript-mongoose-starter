@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "compile": "npm run generate && tsc",
-    "start": "npm run compile && node ./dist/index.js",
+    "start": "npm run compile && node --es-module-specifier-resolution=node ./dist/index.js",
     "generate": "graphql-codegen --config codegen.yml"
   },
   "keywords": [],
@@ -21,6 +21,7 @@
     "@graphql-codegen/typescript-resolvers": "3.2.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.0",
     "@types/ws": "^8.5.4",
