@@ -7,13 +7,11 @@ import { useServer } from 'graphql-ws/lib/use/ws'
 import http from 'http'
 import cors from 'cors'
 import config from './utils/config'
+import { DIRECTIVES } from '@graphql-codegen/typescript-mongodb'
 
 const { MONGODB_URI, PORT } = config
 
 // import Veterinarian from './models/veterinarian'
-
-import { readFileSync } from 'fs'
-import path from "path"
 
 import {
     typeDefs as scalarTypeDefs,
@@ -45,7 +43,8 @@ const start = async () => {
     const schema = makeExecutableSchema({
         typeDefs: [
             ...scalarTypeDefs,
-            typeDefs
+            typeDefs,
+            DIRECTIVES
         ],
         resolvers: [
             scalarResolvers,

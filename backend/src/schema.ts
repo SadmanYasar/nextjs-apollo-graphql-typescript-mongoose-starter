@@ -5,6 +5,13 @@ type Query {
   books: [Book]
 }
 
+type User @entity {
+  id: String @id
+  username: String! @column
+  email: String @column
+  password: String! @column
+}
+
 type Book {
   title: String
   author: String

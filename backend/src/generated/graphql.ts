@@ -43,6 +43,14 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
 };
 
+export type User = {
+  __typename?: 'User';
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type AdditionalEntityFields = {
   path?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
@@ -125,6 +133,7 @@ export type ResolversTypes = {
   Book: ResolverTypeWrapper<Book>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  User: ResolverTypeWrapper<User>;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -136,6 +145,7 @@ export type ResolversParentTypes = {
   Book: Book;
   Mutation: {};
   Query: {};
+  User: User;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -208,11 +218,20 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
 };
 
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   AddBookMutationResponse?: AddBookMutationResponseResolvers<ContextType>;
   Book?: BookResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
@@ -227,3 +246,9 @@ export type DirectiveResolvers<ContextType = any> = {
 };
 
 import { ObjectId } from 'mongodb';
+export type UserDbObject = {
+  email?: Maybe<string>,
+  _id?: Maybe<ObjectId>,
+  password: string,
+  username: string,
+};
