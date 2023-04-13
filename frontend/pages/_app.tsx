@@ -7,6 +7,8 @@ import {
 } from "@clerk/nextjs";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { ApolloProvider } from "@apollo/client";
+import client from "../utils/apollo-client";
 
 //  List pages you want to be publicly accessible, or leave empty if
 //  every page requires authentication. Use this naming strategy:
@@ -27,19 +29,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   // Otherwise, use Clerk to require authentication
   return (
     <ClerkProvider {...pageProps}>
-      {isPublicPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <>
-          <SignedIn>
-            <UserButton afterSignOutUrl='/' />
-            <Component {...pageProps} />
-          </SignedIn>
-          <SignedOut>
-            <RedirectToSignIn />
-          </SignedOut>
-        </>
-      )}
+      <ApolloProvider client={client}>
+        {isPublicPage ? (
+          <Component {...pageProps} />
+        ) : (
+          <>
+            <SignedIn>
+              <UserButton afterSignOutUrl='/' />
+              <Component {...pageProps} />
+            </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          </>
+        )}
+      </ApolloProvider>
     </ClerkProvider>
   );
 }

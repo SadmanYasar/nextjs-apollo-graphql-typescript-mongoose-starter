@@ -5,15 +5,15 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 
-const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('your-token');
-    return {
-        headers: {
-            ...headers,
-            authorization: token ? `bearer ${token}` : null,
-        }
-    };
-});
+// const authLink = setContext((_, { headers }) => {
+//     const token = localStorage.getItem('your-token');
+//     return {
+//         headers: {
+//             ...headers,
+//             authorization: token ? `bearer ${token}` : null,
+//         }
+//     };
+// });
 
 const httpLink = new HttpLink({
     uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -34,7 +34,8 @@ const splitLink = split(
         );
     },
     wsLink,
-    authLink.concat(httpLink)
+    httpLink
+    // authLink.concat(httpLink)
 );
 
 const client = new ApolloClient({
