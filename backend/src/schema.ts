@@ -3,6 +3,13 @@ import { gql } from "apollo-server"
 const typeDefs = gql`
 type Query {
   books: [Book]
+  me: UserResponse
+}
+
+type UserResponse {
+  id: String
+  username: String!
+  email: String
 }
 
 type User @entity {

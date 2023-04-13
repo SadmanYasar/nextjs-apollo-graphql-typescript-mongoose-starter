@@ -41,6 +41,7 @@ export type MutationAddBookArgs = {
 export type Query = {
   __typename?: 'Query';
   books?: Maybe<Array<Maybe<Book>>>;
+  me?: Maybe<UserResponse>;
 };
 
 export type User = {
@@ -48,6 +49,13 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -134,6 +142,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
+  UserResponse: ResolverTypeWrapper<UserResponse>;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -146,6 +155,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   Query: {};
   User: User;
+  UserResponse: UserResponse;
   AdditionalEntityFields: AdditionalEntityFields;
 };
 
@@ -216,6 +226,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
+  me?: Resolver<Maybe<ResolversTypes['UserResponse']>, ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -226,12 +237,20 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserResponse'] = ResolversParentTypes['UserResponse']> = {
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   AddBookMutationResponse?: AddBookMutationResponseResolvers<ContextType>;
   Book?: BookResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  UserResponse?: UserResponseResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {

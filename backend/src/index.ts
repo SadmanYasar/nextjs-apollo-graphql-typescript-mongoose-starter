@@ -8,6 +8,8 @@ import http from 'http'
 import cors from 'cors'
 import config from './utils/config'
 import { DIRECTIVES } from '@graphql-codegen/typescript-mongodb'
+import Cookies from 'cookies'
+import clerk from '@clerk/clerk-sdk-node'
 
 const { MONGODB_URI, PORT } = config
 
@@ -61,8 +63,21 @@ const start = async () => {
     const server = new ApolloServer({
         schema,
         introspection: process.env.NODE_ENV !== 'production',
-        context: async ({ req }) => {
+        context: async ({ req, res }) => {
+            //authenticate user using Clerk
             // TODO - USE CLERK TO AUTHENTICATE USER
+            // Retrieve the particular session ID from a
+            // query string parameter
+            const sessionId = req.query._clerk_session_id as string
+
+            // Note: Clerk stores the clientToken in a cookie 
+            const cookies = new Cookies(req, res)
+            const clientToken = cookies.get('__session')
+            const session = await clerk.sessions.verifySession(sessionId, clientToken)
+            const userId = session.userId
+
+            const user = await clerk.users.getUser(userId)
+            return { user }
         },
         plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer: httpServer }),

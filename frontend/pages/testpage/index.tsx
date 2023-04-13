@@ -48,5 +48,5 @@ export default function TestPage({ x, y, texture }: Props) {
                 <RotatingBunny x={width / 2} y={height / 2} />
             </Stage>
         </>
-    )
+    );
 };

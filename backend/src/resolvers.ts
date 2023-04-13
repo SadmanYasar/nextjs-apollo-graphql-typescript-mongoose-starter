@@ -13,6 +13,11 @@ export const resolvers: Resolvers = {
             }
         ]
         ,
+        me: () => ({
+            id: '1',
+            username: 'test',
+            email: 'test@mail.com',
+        })
     },
 }
 
